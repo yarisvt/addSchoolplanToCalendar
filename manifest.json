@@ -1,0 +1,28 @@
+{
+  "name": "Automatisch rooster uploaden naar G Calendar",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnq2NIAApjHHnDr/OvMcoDCY2mvrdaRygYKXfc86j5dEu+8dfwBLUItfnNXwL0hksI8EsgFdy27Shk6DJTaS6oTWRlOf05Bwzy2kPg51mXu7Ksg3NT6L/T37poRdcTxAdnXtVT+KgMSCsxWxH486IlObro7LKFU9gFdMNETiOWBben3SuhgCjn/heNs4RBWbNsywlfTblr2GjBLDo6EkMmDfagihs7CCK3iJjWvUuk91f9KvZo8Bkc62/yyzjBSupP/I3ArF6D90tmlOUNxxxyBOZ9it2k8cWG9KwcbxLqPbmv5tej8HZXPa8bntdEiKmCv2eXOGDJXL6Hk+v2hvdPwIDAQAB",
+  "version": "1.0",
+  "oauth2": {
+    "client_id": "888991791202-e18vlhskssfp8on6lvns1dj2bhh2c3u0.apps.googleusercontent.com",
+    "scopes": ["https://www.googleapis.com/auth/calendar"]
+  },
+  "icons": { "16": "icons/icon_16.png",
+           "48": "icons/icon_48.png",
+          "128": "icons/icon_128.png" },
+  "description": "Gebruikt OAuth om te verbinden met Google Calendar's API",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_title": "Voeg toe aan Google Calendar",
+    "default_popup": "index.html"
+  },
+  "permissions": [
+    "http://schoolplan.han.nl/*", "identity"
+  ],
+
+
+  "background": {
+    "page": "background.html",
+    "persistent": false
+  },
+  "content_security_policy": "script-src 'self' https://apis.google.com/; object-src 'self'"
+}

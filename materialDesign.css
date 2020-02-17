@@ -1,0 +1,51 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+body,
+input,
+select,
+textarea,
+body * {
+  font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
+}
+
+body::after, body::before,
+input::after,
+input::before,
+select::after,
+select::before,
+textarea::after,
+textarea::before,
+body *::after,
+body *::before {
+  box-sizing: border-box;
+}
+
+body {
+  width: 300px;
+  height: 70px;
+}
+
+h1 {
+  font-size: 1.2rem;
+  text-align: center;
+  margin: 0 0 2em;
+  display: inline;
+}
+
+button {
+  display: inline-block;
+  cursor: pointer;
+  color: #000000;
+  font-size: 1.2rem;
+}
+
+.button:hover {
+  background-color: #0000CC;
+  color: #DCDCDC;
+}
+
+.button:active{
+  position: :relative;
+  top: 1px;
+}

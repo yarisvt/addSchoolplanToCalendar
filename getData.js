@@ -49,9 +49,10 @@ function getData() {
  * @param  {string} endDate   The end date of the lesson.
  * @return {json}             An event
  */
-function createEvent(summary, startDate, endDate) {
+function createEvent(summary, startDate, endDate, classroom) {
   return {
     "summary": summary,
+    "location": classroom,
     "start": {
       "dateTime": startDate,
       "timeZone": "Europe/Amsterdam"
@@ -100,25 +101,27 @@ function getSelectedValue() {
  * @return {array}  Array containing events.
  */
 function addEvents() {
-  /**
-  * Add events, which are formatted for the google calendar api, to a list.
-  */
   let dates = getWeekDays(new Date(getSelectedValue()));
+  let regex = /[A-Z][0-9]\.[0-9]{2}/
   let allData = getData();
   allEvents = [];
   for (let i = 0; i < allData.length; i++) {
     for (let j = 0; j < allData[i].length; j++) {
-      if (allData[i][j] != "") {
+      if (allData[i][j] !== "") {
         let summary = allData[i][j].split(" ")[0];
         let ind = allData[i].indexOf(allData[i][j]);
-        if (dates[ind] && summary != "&nbsp;") {
-          if (allData[i][0] == "&nbsp;") {
+        if (dates[ind] && summary !== "&nbsp;") {
+          if (allData[i][0] === "&nbsp;") {
             alert("Check lestijden checkbox pls..")
             return;
           } else {
+            let classroom = ""
+            if (allData[i][j] !== "&nbsp;") {
+              classroom = allData[i][j].match(regex)[0]
+            }
             let startDate = dates[ind] + "T" + allData[i][0] + ":00";
             let endDate = dates[ind] + "T" + allData[i + 1][0] + ":00";
-            let event = createEvent(summary, startDate, endDate);
+            let event = createEvent(summary, startDate, endDate, classroom);
             allEvents.push(event);
           }
         }

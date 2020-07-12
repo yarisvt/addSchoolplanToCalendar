@@ -1,5 +1,7 @@
-const API_KEY = 'YOUR_API_KEY';
-const CLIENT_ID = 'YOUR_CLIENT_ID';
+const manifest = chrome.runtime.getManifest()
+const API_KEY = manifest.oauth2.api_key;
+const CLIENT_ID = manifest.oauth2.client_id;
+
 const SCOPES = 'https://www.googleapis.com/auth/calendar'
 const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
 const delay = ms => new Promise(res => setTimeout(res, ms));
@@ -65,10 +67,9 @@ async function receiveItems(resultsArray) {
         'resource': event
       });
       await request.execute(event => console.log(`Event created: ${event.htmlLink}`));
-
-      await delay(5000);
-      alert("Events aan je google calendar toegevoegd!")
     }
+    await delay(5000);
+    alert("Events aan je google calendar toegevoegd!")
   } else {
     alert('Er is iets mis gegaan.')
   }

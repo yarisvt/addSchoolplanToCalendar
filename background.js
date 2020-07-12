@@ -1,5 +1,5 @@
-const API_KEY = 'AIzaSyBCTkJAuZPIajjnSzfY_KUK2FrOEM85AcY';
-const CLIENT_ID = '888991791202-3cpj7sl94d0e30ered3ocm7o8t15thv4.apps.googleusercontent.com';
+const API_KEY = 'YOUR_API_KEY';
+const CLIENT_ID = 'YOUR_CLIENT_ID';
 const SCOPES = 'https://www.googleapis.com/auth/calendar'
 const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
 const delay = ms => new Promise(res => setTimeout(res, ms));

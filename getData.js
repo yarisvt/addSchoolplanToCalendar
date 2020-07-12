@@ -1,3 +1,23 @@
+const lessonTimes = {
+  "09:00": "09:45",
+  "09:45": "10:30",
+  "10:45": "11:30",
+  "11:30": "12:15",
+  "12:15": "13:00",
+  "13:00": "13:45",
+  "13:45": "14:30",
+  "14:30": "15:15",
+  "15:30": "16:15",
+  "16:15": "17:00",
+  "17:00": "17:45",
+  "17:45": "18:30",
+  "18:30": "19:15",
+  "19:15": "20:00",
+  "20:00": "20:45",
+  "20:45": "21:30"
+}
+
+
 addEvents();
 
 /**
@@ -36,7 +56,6 @@ function getData() {
     }
     allData.push(data);
   }
-  console.log(allData);
   return allData;
 }
 
@@ -105,6 +124,7 @@ function addEvents() {
   let regex = /[A-Z][0-9]\.[0-9]{2}/
   let allData = getData();
   allEvents = [];
+
   for (let i = 0; i < allData.length; i++) {
     for (let j = 0; j < allData[i].length; j++) {
       if (allData[i][j] !== "") {
@@ -112,15 +132,15 @@ function addEvents() {
         let ind = allData[i].indexOf(allData[i][j]);
         if (dates[ind] && summary !== "&nbsp;") {
           if (allData[i][0] === "&nbsp;") {
-            alert("Check lestijden checkbox pls..")
+            alert("Check 'Toon Lestijden'")
             return;
           } else {
             let classroom = ""
             if (allData[i][j] !== "&nbsp;") {
-              classroom = allData[i][j].match(regex)[0]
+              classroom = regex.test(allData[i][j]) ? allData[i][j].match(regex)[0] : 'test';
             }
-            let startDate = dates[ind] + "T" + allData[i][0] + ":00";
-            let endDate = dates[ind] + "T" + allData[i + 1][0] + ":00";
+            let startDate = `${dates[ind]}T${allData[i][0]}:00`;
+            let endDate = `${dates[ind]}T${lessonTimes[allData[i][0]]}:00`;
             let event = createEvent(summary, startDate, endDate, classroom);
             allEvents.push(event);
           }
@@ -128,6 +148,5 @@ function addEvents() {
       }
     }
   }
-  console.log(allEvents);
   return allEvents;
 }

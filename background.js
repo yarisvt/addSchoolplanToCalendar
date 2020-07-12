@@ -1,5 +1,5 @@
-const API_KEY = 'AIzaSyBCiUisgWlS1sjkaVNzEIcbBC1CSZ8IEss';
-const CLIENT_ID = '888991791202-e18vlhskssfp8on6lvns1dj2bhh2c3u0.apps.googleusercontent.com';
+const API_KEY = 'AIzaSyBCTkJAuZPIajjnSzfY_KUK2FrOEM85AcY';
+const CLIENT_ID = '888991791202-3cpj7sl94d0e30ered3ocm7o8t15thv4.apps.googleusercontent.com';
 const SCOPES = 'https://www.googleapis.com/auth/calendar'
 const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
 const delay = ms => new Promise(res => setTimeout(res, ms));
@@ -14,23 +14,23 @@ function onGAPILoad() {
     // Don't pass client nor scope as these will init auth2, which we don't want
     apiKey: API_KEY,
     discoveryDocs: DISCOVERY_DOCS,
-  }).then(function() {
+  }).then(function () {
     console.log('gapi initialized')
     chrome.identity.getAuthToken({
       interactive: true
-    }, function(token) {
+    }, function (token) {
       gapi.auth.setToken({
         'access_token': token,
       });
 
     })
-  }, function(error) {
+  }, function (error) {
     console.log('error', error)
   });
 }
 
 chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
+  function (request, sender, sendResponse) {
     switch (request.directive) {
       case "popup-click":
         // execute the content script
@@ -57,17 +57,19 @@ chrome.runtime.onMessage.addListener(
  * @param  {array} resultsArray array containing the events.
  */
 async function receiveItems(resultsArray) {
-  if (resultsArray) {
-    for (let event of resultsArray[0]) {
+  console.log(resultsArray);
+  if (resultsArray[0]) {
+    for await (let event of resultsArray[0]) {
       let request = gapi.client.calendar.events.insert({
         'calendarId': 'primary',
         'resource': event
       });
-      request.execute(function(event) {
-        console.log('Event created: ' + event.htmlLink);
-      });
+      await request.execute(event => console.log(`Event created: ${event.htmlLink}`));
+
+      await delay(5000);
+      alert("Events aan je google calendar toegevoegd!")
     }
-    await delay(10000);
-    alert("Events aan je google agenda toegevoegd!")
+  } else {
+    alert('Er is iets mis gegaan.')
   }
 }
